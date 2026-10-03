@@ -20,7 +20,7 @@ router.post("/register", async (req, res) => {
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return res.status(409).json({
+      return res.status(400).json({
         message: "Email already registered",
       });
     }
@@ -31,7 +31,9 @@ router.post("/register", async (req, res) => {
       password,
     });
 
-    res.status(201).json({
+    console.log(`User registered: ${user.username} (${user.email})`);
+
+    res.status(200).json({
       message: "User registered successfully",
       user: {
         id: user._id,
